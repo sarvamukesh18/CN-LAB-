@@ -1,0 +1,79 @@
+Server.java
+import java.net.*;
+import java.lang.*;
+import java.io.*;
+public class Server
+{
+public static final int PORT = 4000;
+public static void main( String args[])
+{
+ServerSocket sersock = null; Socket sock = null;
+try
+{
+
+sersock = new ServerSocket(PORT); System.out.println("Server Started :"+sersock);
+try
+{
+sock = sersock.accept();
+System.out.println("Client Connected :"+ sock);
+DataInputStream ins = new DataInputStream(sock.getInputStream());
+System.out.println(ins.readLine());
+PrintStream ios = new PrintStream(sock.getOutputStream());
+ios.println("Hello from server");
+ios.close();
+sock.close();
+}
+catch(SocketException se)
+{
+System.out.println("Server Socket problem "+se.getMessage());
+}
+}
+catch(Exception e)
+{
+System.out.println("Couldn't start " + e.getMessage()) ;
+}
+System.out.println(" Connection from : " + sock.getInetAddress());
+}
+}
+Client.java
+import java.lang.*;
+import java.io.*;
+import java.net.*;
+import java.net.InetAddress;
+class client
+{
+public static void main(String args[])
+{
+Socket sock=null;
+DataInputStream dis=null;
+PrintStream ps=null;
+System.out.println(" Trying to connect");
+try
+{
+sock= new Socket(InetAddress.getLocalHost(),Server.PORT);
+ps= new PrintStream(sock.getOutputStream());
+ps.println(" Hi from client");
+
+DataInputStream is = new DataInputStream(sock.getInputStream());
+System.out.println(is.readLine());
+}
+catch(SocketException e)
+{
+System.out.println("SocketException " + e);
+}
+catch(IOException e)
+}
+Finally
+System.out.println("IOException " + e);
+{
+try
+{
+Sock.close();
+}
+catch(IOException ie)
+{
+System.out.println(" Close Error :" + ie.getMessage());
+}
+}
+}
+}
